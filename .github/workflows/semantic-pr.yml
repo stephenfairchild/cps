@@ -1,5 +1,6 @@
-on:
-  pull_request:
+name: Validate PR Title
+
+on: [push, pull_request]
 
 jobs:
   main:
