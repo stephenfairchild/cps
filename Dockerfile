@@ -1,15 +1,10 @@
-FROM alpine:3.14
-
+FROM tecktron/python-waitress:latest
+COPY ./app /app
 WORKDIR /app
-COPY . . 
-RUN apk update && apk upgrade --available 
-RUN apk add --update vim bash python3 py3-pip
-
-RUN export PATH=${PATH}:/usr/bin/python3.7
-RUN ln -sf python3 /usr/bin/python
 
 ENV PIP_ROOT_USER_ACTION=ignore
-RUN pip3 install -r src/requirements.txt
+RUN pip3 install -r requirements.txt
+RUN pip3 install waitress
 
-ENV FLASK_APP=/app/src/app.py
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+#ENV FLASK_APP=/app/src/app.py
+CMD ["waitress-serve", "--call", "app:create_app"]
